@@ -4,6 +4,7 @@ var cheerio = require('cheerio');
 var moment = require('moment');
 
 var _RESERVOIRGOVURL = 'http://fhy.wra.gov.tw/ReservoirPage_2011/StorageCapacity.aspx';
+var params = require('./params.json');
 
 module.exports = function (callback) {
 
@@ -13,7 +14,7 @@ module.exports = function (callback) {
          * 得到目前網頁資料的 html
          */
         function (cb){
-            request(_RESERVOIRGOVURL, function (error, response, body) {
+            request.post({url: _RESERVOIRGOVURL, form: params}, function (error, response, body)        {
 
                 if(error){
                     return cb(error);
@@ -88,7 +89,7 @@ module.exports = function (callback) {
 
             $('.list').find('tr').each(function (i, elem){
 
-                if(i > 22 || i < 2){
+                if(i > 30 || i < 2){
                     return;
                 }
 
@@ -99,11 +100,11 @@ module.exports = function (callback) {
                 var daliyInflow = $(this).find('td').eq(4).text().trim().replace(/(\r\n|\n|\r|\s)/g,'');
                 var daliyOverflow = $(this).find('td').eq(5).text().trim().replace(/(\r\n|\n|\r|\s)/g,'');
                 var daliyDetector = $(this).find('td').eq(6).text().trim().replace(/(\r\n|\n|\r|\s)/g,'');
-                var concentration = $(this).find('td').eq(7).text().trim().replace(/(\r\n|\n|\r|\s)/g,'');
-                var immediateTime = $(this).find('td').eq(8).text().trim().replace(/(\r\n|\n|\r|\s)/g,'');
-                var immediateLevel = $(this).find('td').eq(9).text().trim().replace(/(\r\n|\n|\r|\s)/g,'');
-                var immediateStorage = $(this).find('td').eq(10).text().trim().replace(/(\r\n|\n|\r|\s)/g,'');
-                var immediatePercentage = $(this).find('td').eq(11).text().trim().replace(/(\r\n|\n|\r|\s)/g,'');
+                //var concentration = $(this).find('td').eq(7).text().trim().replace(/(\r\n|\n|\r|\s)/g,'');
+                var immediateTime = $(this).find('td').eq(7).text().trim().replace(/(\r\n|\n|\r|\s)/g,'');
+                var immediateLevel = $(this).find('td').eq(8).text().trim().replace(/(\r\n|\n|\r|\s)/g,'');
+                var immediateStorage = $(this).find('td').eq(9).text().trim().replace(/(\r\n|\n|\r|\s)/g,'');
+                var immediatePercentage = $(this).find('td').eq(10).text().trim().replace(/(\r\n|\n|\r|\s)/g,'');
 
                 outputData.push({
                     reservoirName: reservoirName,
@@ -113,7 +114,7 @@ module.exports = function (callback) {
                     daliyInflow: daliyInflow,
                     daliyOverflow: daliyOverflow,
                     daliyDetector: daliyDetector,
-                    concentration: concentration,
+                    //concentration: concentration,
                     immediateTime: immediateTime,
                     immediateLevel: immediateLevel,
                     immediateStorage: immediateStorage,
