@@ -62,3 +62,7 @@ http://128.199.223.114:10080/today
 **Open your browser and type**
 
 `http://127.0.0.1:10080/`
+
+For today data:
+
+`http://127.0.0.1:10080/today`

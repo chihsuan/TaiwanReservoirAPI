@@ -30,14 +30,14 @@ module.exports = function (callback) {
         function (html, cb){
 
             var now = moment();
-            var yesterday
+            var yesterday = now.subtract(1, 'day');
             var $ = cheerio.load(html);
-
+  
             var form = $('#form1');
             // 選擇今天日期
-            form.find('select#cphMain_ucDate_cboYear').val(now.year());
-            form.find('select#cphMain_ucDate_cboMonth').val(now.month() + 1);
-            form.find('select#cphMain_ucDate_cboDay').val(now.date()-2);
+            form.find('select#cphMain_ucDate_cboYear').val(yesterday.year());
+            form.find('select#cphMain_ucDate_cboMonth').val(yesterday.month()+1);
+            form.find('select#cphMain_ucDate_cboDay').val(yesterday.date());
             var viewState = form.find('#__VIEWSTATE').val();
             
             // 先填入固定的欄位
@@ -48,7 +48,7 @@ module.exports = function (callback) {
               '__LASTFOCUS': '',
               '__VIEWSTATE': viewState,
               '__ASYNCPOST': true
-            }
+            };
             // 把剩下的欄位補上
             var arr = form.serializeArray();
             for (var i in arr) {
@@ -59,7 +59,7 @@ module.exports = function (callback) {
               return $(this).attr('src').match('ctl02_HiddenField');
             });
             var ctl02_value = decodeURIComponent(script.attr('src')).match(/;;AjaxControlToolkit.*/)[0];
-            data['ctl02_HiddenField'] = ctl02_value;
+            data.ctl02_HiddenField = ctl02_value;
 
             request.post({
               url: _RESERVOIRGOVURL,
