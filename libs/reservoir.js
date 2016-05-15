@@ -33,11 +33,11 @@ module.exports = function (callback) {
             var yesterday = now.subtract(1, 'day');
             var $ = cheerio.load(html);
   
-            var form = $('#form1');
+            var form = $('#aspnetForm');
             // 選擇今天日期
-            form.find('select#cphMain_ucDate_cboYear').val(yesterday.year());
-            form.find('select#cphMain_ucDate_cboMonth').val(yesterday.month()+1);
-            form.find('select#cphMain_ucDate_cboDay').val(yesterday.date());
+            form.find('select#ctl00_cphMain_ucDate_cboYear').val(yesterday.year());
+            form.find('select#ctl00_cphMain_ucDate_cboMonth').val(yesterday.month() + 1);
+            form.find('select#ctl00_cphMain_ucDate_cboDay').val(yesterday.date());
             var viewState = form.find('#__VIEWSTATE').val();
             
             // 先填入固定的欄位
@@ -59,7 +59,7 @@ module.exports = function (callback) {
               return $(this).attr('src').match('ctl02_HiddenField');
             });
             var ctl02_value = decodeURIComponent(script.attr('src')).match(/;;AjaxControlToolkit.*/)[0];
-            data.ctl02_HiddenField = ctl02_value;
+            data.ctl00_ctl02_HiddenField = ctl02_value;
 
             request.post({
               url: _RESERVOIRGOVURL,
@@ -88,6 +88,7 @@ module.exports = function (callback) {
             var lastedUpdateTime = moment().format('YYYY-MM-DD HH:mm:ss');
 
             var $ = cheerio.load(html);
+            console.log(html)
 
             $('.list').find('tr').each(function (i, elem){
 
