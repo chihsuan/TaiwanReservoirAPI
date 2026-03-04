@@ -3,7 +3,7 @@ var async = require('async');
 var cheerio = require('cheerio');
 var moment = require('moment');
 
-var _RESERVOIRGOVURL = 'http://fhy.wra.gov.tw/ReservoirPage_2011/StorageCapacity.aspx';
+var _RESERVOIRGOVURL = 'https://fhy.wra.gov.tw/ReservoirPage_2011/StorageCapacity.aspx';
 var params = require('./params.json');
 
 module.exports = function (callback) {
@@ -63,7 +63,7 @@ module.exports = function (callback) {
               url: _RESERVOIRGOVURL,
               headers: {
                 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36',
-                'Referer': 'http://fhy.wra.gov.tw/ReservoirPage_2011/StorageCapacity.aspx',
+                'Referer': 'https://fhy.wra.gov.tw/ReservoirPage_2011/StorageCapacity.aspx',
                 'X-MicrosoftAjax': 'Delta=true',
                 'X-Requested-With': 'XMLHttpRequest'
               },
